@@ -3,7 +3,7 @@ COPY . /github.com/mfisher1411/microservices_course/week_2/grpc/source/
 WORKDIR /github.com/mfisher1411/microservices_course/week_2/grpc/source/
 
 RUN go mod download
-RUN go build -o ./bin/crud_server cmd/grpc/main.go
+RUN go build -o ./bin/crud_server cmd/grpc_server/main.go
 
 
 FROM alpine:latest
