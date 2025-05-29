@@ -25,7 +25,7 @@ jobs:
 
       - name: Create .env file
         run: |
-          touch ${{ env.DB_DIR }}/prod.env
+          touch ${{ env.DB_DIR }}/.env
           echo "${{ secrets.POSTGRES_ENV_FILE }}" > ${{ env.DB_DIR }}/.env
 
       - name: Setup Docker Tag
