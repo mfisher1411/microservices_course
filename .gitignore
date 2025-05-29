@@ -1,7 +1,5 @@
 .idea
 
-.github/workflows/week_2_ci.yaml
-
 /week_1/grpc/bin/
 /week_2/grpc/bin/
 /week_2/postgres/bin/
