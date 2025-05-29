@@ -2,15 +2,11 @@ name: DB
 on:
   push:
     branches:
-      - main
-    paths:
-      - 'week_2/postgres/**'   
+      - main 
 
   pull_request:
     branches:
-      - main
-    paths:
-      - 'week_2/postgres/**'    
+      - main    
 
 
 env:
@@ -21,7 +17,7 @@ env:
 jobs:
   build-and-push:
     name: Build and Push migrator
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.meta.outputs.tag }}
     steps:
@@ -29,7 +25,7 @@ jobs:
 
       - name: Create .env file
         run: |
-          touch ${{ env.DB_DIR }}/prod.env
+          touch ${{ env.DB_DIR }}/.env
           echo "${{ secrets.POSTGRES_ENV_FILE }}" > ${{ env.DB_DIR }}/.env
 
       - name: Setup Docker Tag
@@ -50,7 +46,7 @@ jobs:
 
       - name: Build migrator
         run: |
-          docker-compose -f ${{ env.DB_DIR }}/docker-compose.yaml build
+          docker compose -f ${{ env.DB_DIR }}/docker-compose.yaml build
 
       - name: Push migrator to registry
         if: ${{ github.event_name != 'pull_request'}}
@@ -59,7 +55,7 @@ jobs:
   deploy:
     name: Deploy DB and Migrate on Selectel Cloud
     if: ${{ github.event_name != 'pull_request'}}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs:
       - build-and-push
     steps:
