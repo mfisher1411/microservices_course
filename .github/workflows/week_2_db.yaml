@@ -2,15 +2,11 @@ name: DB
 on:
   push:
     branches:
-      - main
-    paths:
-      - 'week_2/postgres/**'   
+      - main 
 
   pull_request:
     branches:
-      - main
-    paths:
-      - 'week_2/postgres/**'    
+      - main    
 
 
 env:
