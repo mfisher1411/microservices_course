@@ -14,6 +14,7 @@ services:
     volumes:
       - postgres_volume:/var/lib/postgresql/data
   migrator:
+    image: ${MIGRATOR_IMAGE}
     build:
       context: .
       dockerfile: migration.Dockerfile
