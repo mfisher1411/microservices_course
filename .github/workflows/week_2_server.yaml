@@ -14,7 +14,7 @@ on:
       #- 'libraries/db_client/**'
 
 env:
-  SERVICE_PATH: week_2/grpc
+  SERVICE_PATH: week_2/grpc/
   SERVICE_NAME: week_2_server
   DOCKER_REGISTRY_URL: cr.selcloud.ru/mfisher1411
 
@@ -60,6 +60,6 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           file: ${{ env.SERVICE_PATH }}/Dockerfile
-          context: .
+          context: week_2/grpc/
           no-cache: true
           provenance: false  # With this setting tags appear in registry!
