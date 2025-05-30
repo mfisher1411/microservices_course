@@ -63,3 +63,28 @@ jobs:
           context: week_2/grpc/
           no-cache: true
           provenance: false  # With this setting tags appear in registry!
+  deploy:
+    name: Deploy service
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request'}}
+    needs:
+      - image-build-and-push
+    steps:
+      - name: Deploy to Selectel Cloud
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSHKEY }}
+          script: |
+            # Login into Selectel Registry
+            docker login -u ${{secrets.DOCKER_REGISTRY_USERNAME}} -p ${{secrets.DOCKER_REGISTRY_PASSWORD}} ${{env.DOCKER_REGISTRY_URL}}
+            
+            # Stop running container
+            docker stop ${{env.SERVICE_NAME}}
+            
+            # Remove old container
+            docker rm  ${{env.SERVICE_NAME}}
+            
+            # Run a new container from a new image
+            docker run -d -p 50051:50051 --network ${{env.SERVICE_NAME}} --name ${{env.SERVICE_NAME}} -t ${{needs.image-build-and-push.outputs.docker-image}}        
