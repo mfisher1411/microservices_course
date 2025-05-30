@@ -9,8 +9,8 @@ on:
   pull_request:
     branches:
       - main    
-    paths:
-      - 'week_2/grpc/**'
+    #paths:
+      #- 'week_2/grpc/**'
       #- 'libraries/db_client/**'
 
 env:
