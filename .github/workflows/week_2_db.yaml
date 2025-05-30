@@ -27,6 +27,7 @@ jobs:
         run: |
           touch ${{ env.DB_DIR }}/.env
           echo "${{ secrets.POSTGRES_ENV_FILE }}" > ${{ env.DB_DIR }}/.env
+          cat .env
 
       - name: Setup Docker Tag
         id: meta
