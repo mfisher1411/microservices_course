@@ -14,7 +14,7 @@ import (
 	desc "github.com/mfisher1411/microservices_course/week_2/grpc/pkg/note_v1"
 )
 
-const grpcPort = 50051
+const grpcPort = 50052
 
 type server struct {
 	desc.UnimplementedNoteV1Server
