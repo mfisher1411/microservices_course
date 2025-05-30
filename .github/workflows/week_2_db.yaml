@@ -95,4 +95,4 @@ jobs:
             # Login into Selectel Registry
             docker login -u ${{secrets.REGISTRY_USERNAME}} -p ${{secrets.REGISTRY_PASSWORD}} ${{env.DOCKER_REGISTRY_URL}}
             cd ~/.deploy/${{ env.DB_DIR }}
-            docker-compose -f ./docker-compose.yaml up -d
+            docker compose -f ./docker-compose.yaml up -d
