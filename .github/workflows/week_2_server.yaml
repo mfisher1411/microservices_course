@@ -14,7 +14,7 @@ on:
       #- 'libraries/db_client/**'
 
 env:
-  SERVICE_PATH: week_2/postgres
+  SERVICE_PATH: week_2/grpc
   SERVICE_NAME: week_2_server
   DOCKER_REGISTRY_URL: cr.selcloud.ru/mfisher1411
 
