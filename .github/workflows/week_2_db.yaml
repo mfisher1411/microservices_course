@@ -1,0 +1,55 @@
+name: week_2_server_db
+on:
+  push:
+    branches:
+      - main
+    #paths:
+    #  - 'services/chat_server_postgres/**'
+  pull_request:
+    branches:
+      - main
+    #paths:
+    #  - 'services/chat_server_postgres/**'
+
+env:
+  DB_DIR: week_2/postgres/
+  MIGRATOR_IMAGE_NAME: week_2_server_migrator
+  DOCKER_REGISTRY_URL: cr.selcloud.ru/mfisher1411
+
+jobs:
+  build-and-push:
+    name: Build and Push migrator
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.meta.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create .env file
+        run: |
+          touch ${{ env.DB_DIR }}/.env
+          echo "${{ secrets.POSTGRES_ENV_FILE }}" > ${{ env.DB_DIR }}/.env
+
+      - name: Setup Docker Tag
+        id: meta
+        run: |
+          echo "tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Setup Image names
+        run: |
+          echo "MIGRATOR_IMAGE=${{ env.DOCKER_REGISTRY_URL }}/${{ env.MIGRATOR_IMAGE_NAME }}:${{ steps.meta.outputs.tag }}" >> "$GITHUB_ENV"
+
+      - name: Login to Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{env.DOCKER_REGISTRY_URL}}
+          username: ${{secrets.DOCKER_REGISTRY_USERNAME}}
+          password: ${{secrets.DOCKER_REGISTRY_PASSWORD}}
+
+      - name: Build migrator
+        run: |
+          docker compose -f ${{ env.DB_DIR }}/docker-compose.yaml build
+
+      - name: Push migrator to registry
+        if: ${{ github.event_name != 'pull_request'}}
+        run: docker image push ${{ env.MIGRATOR_IMAGE }}
