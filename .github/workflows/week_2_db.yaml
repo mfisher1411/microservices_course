@@ -12,7 +12,7 @@ on:
     #  - 'services/chat_server_postgres/**'
 
 env:
-  DB_DIR: week_2/postgres/
+  DB_DIR: week_2/postgres
   MIGRATOR_IMAGE_NAME: week_2_server_migrator
   DOCKER_REGISTRY_URL: cr.selcloud.ru/mfisher1411
 
