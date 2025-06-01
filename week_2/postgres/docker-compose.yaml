@@ -16,7 +16,7 @@ services:
       - server_pg  
   server_migrator:
     container_name: server_migrator
-    image: server_migrator
+    image: ${MIGRATOR_IMAGE}
     build:
       context: .
       dockerfile: migrator-local.Dockerfile
