@@ -25,10 +25,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Create .env file
+      - name: Create local.env file
         run: |
-          touch ${{ env.DB_DIR }}/.env
-          echo "${{ secrets.POSTGRES_ENV_FILE }}" > ${{ env.DB_DIR }}/.env
+          touch ${{ env.DB_DIR }}/local.env
+          echo "${{ secrets.POSTGRES_ENV_FILE }}" > ${{ env.DB_DIR }}/local.env
 
       - name: Setup Docker Tag
         id: meta
@@ -81,16 +81,16 @@ jobs:
 
 
 
-      - name: Create .env file
+      - name: Create local.env file
 
 
         run: |
 
 
-          touch ${{ env.DB_DIR }}/.env
+          touch ${{ env.DB_DIR }}/local.env
 
 
-          echo "${{ secrets.POSTGRES_ENV_FILE }}" > ${{ env.DB_DIR }}/.env
+          echo "${{ secrets.POSTGRES_ENV_FILE }}" > ${{ env.DB_DIR }}/local.env
 
 
 
@@ -138,7 +138,7 @@ jobs:
           key: ${{secrets.SSHKEY}}
 
 
-          source: "${{ env.DB_DIR }}/docker-compose.yaml,${{ env.DB_DIR }}/.env"
+          source: "${{ env.DB_DIR }}/docker-compose.yaml,${{ env.DB_DIR }}/local.env,${{ env.DB_DIR }}/.env"
 
 
           target: "~/.deploy/"
