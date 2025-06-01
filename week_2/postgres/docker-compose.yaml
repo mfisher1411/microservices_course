@@ -3,21 +3,25 @@ volumes:
   postgres_volume:
 
 services:
-  pg:
+  server_pg:
     image: postgres:14-alpine3.17
-    environment:
-      - "POSTGRES_DB=${PG_DATABASE_NAME}"
-      - "POSTGRES_USER=${PG_USER}"
-      - "POSTGRES_PASSWORD=${PG_PASSWORD}"
+    container_name: server_pg
+    env_file:
+      - local.env
     ports:
-      - "${PG_PORT}:5432"
+      - "54321:5432"
     volumes:
       - postgres_volume:/var/lib/postgresql/data
-  migrator:
-    image: ${MIGRATOR_IMAGE}
+    networks:
+      - server_pg  
+  server_migrator:
+    container_name: server_migrator
+    image: server_migrator
     build:
       context: .
-      dockerfile: migration.Dockerfile
+      dockerfile: migrator-local.Dockerfile
     restart: on-failure
-    environment:
-      DB_HOST: pg      
+    networks:
+      - server_pg
+networks:
+  server_pg:      
