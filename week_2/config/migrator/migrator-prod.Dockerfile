@@ -11,7 +11,7 @@ RUN chmod +x /bin/goose
 WORKDIR /root
 
 ADD migrations/*.sql migrations/
-ADD migrator-prod.sh .
+ADD migrator/migrator-prod.sh .
 ADD prod.env .
 
 RUN chmod +x migrator-prod.sh
