@@ -1,4 +1,4 @@
-name: chat-server service
+name: week_2_server
 on:
   push:
     branches: [main]
