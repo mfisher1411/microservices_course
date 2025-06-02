@@ -1,0 +1,30 @@
+volumes:
+  postgres_volume_local:
+
+services:
+  pg_local:
+    image: postgres:14-alpine3.17
+    container_name: pg_local
+    env_file:
+      - local.env
+    ports:
+      - "54321:5432"
+    volumes:
+      - postgres_volume_local:/var/lib/postgresql/data
+    networks:
+      - pg_local
+
+  migrator_local:
+    container_name: migrator_local
+    image: ${MIGRATOR_IMAGE}
+    build:
+      context: .
+      dockerfile: migrator/migrator-local.Dockerfile
+    env_file:
+      - local.env
+    restart: on-failure
+    networks:
+      - pg_local
+
+networks:
+  pg_local:
