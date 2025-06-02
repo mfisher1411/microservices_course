@@ -1,10 +1,20 @@
 FROM golang:1.24.3-alpine3.21 AS builder
-WORKDIR /app
-COPY . .
-RUN go build -o grpc_server cmd/grpc_server/main.go
+
+COPY . /github.com/mfisher1411/microservices_course/week_2/config/source/
+
+WORKDIR /github.com/mfisher1411/microservices_course/week_2/config/source/
+
+RUN go mod download
+RUN go build -o ./bin/main ./cmd/main.go
 
 FROM alpine:latest
-WORKDIR /app
-COPY --from=builder /app/grpc_server .
-COPY prod.env .
-COPY local.env .
+
+WORKDIR /root/
+COPY --from=builder /github.com/mfisher1411/microservices_course/week_2/config/source/bin/main ./main
+# COPY --from=builder /github.com/mfisher1411/microservices_course/week_2/config/source/local.env ./.env
+
+# <-- передаём .env как build-аргумент
+ARG ENV_FILE=.env
+COPY --from=builder /github.com/mfisher1411/microservices_course/week_2/config/source/${ENV_FILE} ./.env
+
+CMD ["./main"]
