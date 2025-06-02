@@ -11,9 +11,9 @@ RUN chmod +x /bin/goose
 WORKDIR /root
 
 ADD migrations/*.sql migrations/
-ADD migration_local.sh .
+ADD migrator/migrator-local.sh .
 ADD local.env .
 
-RUN chmod +x migration_local.sh
+RUN chmod +x migrator-local.sh
 
-ENTRYPOINT ["bash", "migration_local.sh"]
+ENTRYPOINT ["bash", "migrator-local.sh"]
