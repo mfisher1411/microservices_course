@@ -1,25 +1,18 @@
-name: week_2_server
+name: chat-server service
 on:
   push:
-    branches:
-      - main
-    #paths:
-      #- 'services/chat_server/**'
-      #- 'libraries/db_client/**'
-  pull_request:
-    branches:
-      - main    
-    #paths:
-      #- 'week_2/grpc/**'
-      #- 'libraries/db_client/**'
+    branches: [main]
+  pull_request: 
+    branches: [main]
 
 env:
   SERVICE_PATH: week_2/config
-  SERVICE_NAME: week_2_server
+  SERVICE_NAME: server
   DOCKER_REGISTRY_URL: cr.selcloud.ru/mfisher1411
 
 jobs:
   
+
   
 
   image-build-and-push:
@@ -32,7 +25,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      
+      - name: Generate env file
+        run: |
+          touch ${{ env.SERVICE_PATH }}/prod.env
+          echo "${{ secrets.PG_PROD_ENV_FILE }}" > ${{ env.SERVICE_PATH }}/prod.env
+
       - name: Setup Docker Tag
         id: meta
         uses: docker/metadata-action@v5
@@ -60,9 +57,12 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           file: ${{ env.SERVICE_PATH }}/Dockerfile
-          context: week_2/config
+          build-args: |
+            ENV_FILE=prod.env
+          context: .
           no-cache: true
           provenance: false  # With this setting tags appear in registry!
+
   deploy:
     name: Deploy service
     runs-on: ubuntu-latest
@@ -81,10 +81,10 @@ jobs:
             docker login -u ${{secrets.DOCKER_REGISTRY_USERNAME}} -p ${{secrets.DOCKER_REGISTRY_PASSWORD}} ${{env.DOCKER_REGISTRY_URL}}
             
             # Stop running container
-            docker stop ${{env.SERVICE_NAME}}
+            docker stop ${{env.SERVICE_NAME}} || true
             
             # Remove old container
-            docker rm  ${{env.SERVICE_NAME}}
+            docker rm  ${{env.SERVICE_NAME}} || true
             
             # Run a new container from a new image
-            docker run -d -p 50053:50053 --name ${{env.SERVICE_NAME}} -t ${{needs.image-build-and-push.outputs.docker-image}}        
+            docker run -d -p 50051:50051 --network ${{env.SERVICE_NAME}} --name ${{env.SERVICE_NAME}} -t ${{needs.image-build-and-push.outputs.docker-image}}
