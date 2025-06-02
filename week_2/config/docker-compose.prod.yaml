@@ -1,0 +1,30 @@
+volumes:
+  postgres_volume_prod:
+
+services:
+  pg_prod:
+    image: postgres:14-alpine3.17
+    container_name: pg_prod
+    env_file:
+      - prod.env
+    ports:
+      - "54322:5432"
+    volumes:
+      - postgres_volume_prod:/var/lib/postgresql/data
+    networks:
+      - pg_prod
+
+  migrator_prod:
+    container_name: migrator_prod
+    image: ${MIGRATOR_IMAGE}
+    build:
+      context: .
+      dockerfile: migrator/migrator-prod.Dockerfile
+    env_file:
+      - prod.env
+    restart: on-failure
+    networks:
+      - pg_prod
+
+networks:
+  pg_prod:
