@@ -7,7 +7,7 @@ WORKDIR /github.com/mfisher1411/microservices_course/week_2/config/source/
 RUN ls -la && cat go.mod
 
 RUN go mod download
-RUN go build -o ./bin/main ./cmd/main.go
+RUN go build -o ./bin/main ./cmd/grpc_server/main.go
 
 FROM alpine:latest
 
