@@ -93,4 +93,4 @@ jobs:
             
             # Run a new container from a new image
             docker run -d -p 50052:50052 --network ${{env.SERVICE_NAME}} --name ${{env.SERVICE_NAME}} -t ${{needs.image-build-and-push.outputs.docker-image}}
-            docker network connect $PG_PROD_NETWORK ${{env.SERVICE_NAME}} || true
+            docker network connect pg_prod ${{env.SERVICE_NAME}} || true
