@@ -19,4 +19,4 @@ COPY --from=builder /github.com/mfisher1411/microservices_course/week_2/config/s
 ARG ENV_FILE=.env
 COPY --from=builder /github.com/mfisher1411/microservices_course/week_2/config/source/${ENV_FILE} ./.env
 
-CMD ["./main"]
+CMD ["./main", "-config-path=prod.env"]
