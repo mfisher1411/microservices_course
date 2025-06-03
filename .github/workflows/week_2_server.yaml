@@ -2,8 +2,7 @@ name: week_2_server
 on:
   push:
     branches: [main]
-  pull_request: 
-    branches: [main]
+
 
 env:
   SERVICE_PATH: week_2/config

@@ -3,8 +3,7 @@ name: week_2_pg_local
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+
 
 jobs:
   deploy-local:
