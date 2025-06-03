@@ -92,6 +92,6 @@ jobs:
             docker rm  ${{env.SERVICE_NAME}} || true
             
             # Run a new container from a new image
-            docker run -d -p 50052:50052 --network ${{env.SERVICE_NAME}} --name ${{env.SERVICE_NAME}} -t ${{needs.image-build-and-push.outputs.docker-image}} -config-path="prod.env"
+            docker run -d -p 50052:50052 --network ${{env.SERVICE_NAME}} --name ${{env.SERVICE_NAME}} -t ${{needs.image-build-and-push.outputs.docker-image}} -config-path=${{ env.SERVICE_PATH }}/prod.env
             docker network connect pg_prod ${{env.SERVICE_NAME}} || true
             docker restart server
