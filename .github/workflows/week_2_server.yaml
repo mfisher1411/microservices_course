@@ -87,7 +87,7 @@ jobs:
             # Stop running container
             docker stop ${{env.SERVICE_NAME}} || true
             
-            # Remove old container
+            # Remove old container again
             docker rm  ${{env.SERVICE_NAME}} || true
             
             # Run a new container from a new image
