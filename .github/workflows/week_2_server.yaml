@@ -79,6 +79,9 @@ jobs:
           script: |
             # Login into Selectel Registry
             docker login -u ${{secrets.DOCKER_REGISTRY_USERNAME}} -p ${{secrets.DOCKER_REGISTRY_PASSWORD}} ${{env.DOCKER_REGISTRY_URL}}
+
+            # Create a network if it does not exist
+            docker network inspect ${{env.SERVICE_NAME}} >/dev/null 2>&1 || docker network create ${{env.SERVICE_NAME}}
             
             # Stop running container
             docker stop ${{env.SERVICE_NAME}} || true
