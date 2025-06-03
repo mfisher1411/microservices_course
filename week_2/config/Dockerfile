@@ -1,6 +1,7 @@
 FROM golang:1.24.3-alpine3.21 AS builder
 
-COPY . /github.com/mfisher1411/microservices_course/week_2/config/source/
+COPY /github.com/mfisher1411/microservices_course/week_2/config/ /github.com/mfisher1411/microservices_course/week_2/config/source/
+
 
 WORKDIR /github.com/mfisher1411/microservices_course/week_2/config/source/
 
