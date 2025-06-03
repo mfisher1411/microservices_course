@@ -77,6 +77,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSHKEY }}
           script: |
+            docker network ls
+            docker ps
             # Login into Selectel Registry
             docker login -u ${{secrets.DOCKER_REGISTRY_USERNAME}} -p ${{secrets.DOCKER_REGISTRY_PASSWORD}} ${{env.DOCKER_REGISTRY_URL}}
 
