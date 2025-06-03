@@ -28,4 +28,4 @@ services:
 
 networks:
   pg_local:
-    external: true
+    name: pg_local

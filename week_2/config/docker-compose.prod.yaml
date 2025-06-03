@@ -28,4 +28,4 @@ services:
 
 networks:
   pg_prod:
-    external: true
+    name: pg_prod
