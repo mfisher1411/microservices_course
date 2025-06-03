@@ -17,6 +17,6 @@ COPY --from=builder /github.com/mfisher1411/microservices_course/week_2/config/s
 
 # <-- передаём .env как build-аргумент
 ARG ENV_FILE=.env
-COPY --from=builder /github.com/mfisher1411/microservices_course/week_2/config/source/${ENV_FILE} ./.env
+COPY --from=builder /github.com/mfisher1411/microservices_course/week_2/config/source/${ENV_FILE} ./prod.env
 
 CMD ["./main", "-config-path=prod.env"]
