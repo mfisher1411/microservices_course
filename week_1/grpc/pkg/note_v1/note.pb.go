@@ -27,7 +27,7 @@ const (
 type NoteInfo struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
-	Context       string                 `protobuf:"bytes,2,opt,name=context,proto3" json:"context,omitempty"`
+	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
 	Author        string                 `protobuf:"bytes,3,opt,name=author,proto3" json:"author,omitempty"`
 	IsPublic      bool                   `protobuf:"varint,4,opt,name=is_public,json=isPublic,proto3" json:"is_public,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -71,9 +71,9 @@ func (x *NoteInfo) GetTitle() string {
 	return ""
 }
 
-func (x *NoteInfo) GetContext() string {
+func (x *NoteInfo) GetContent() string {
 	if x != nil {
-		return x.Context
+		return x.Content
 	}
 	return ""
 }
@@ -604,7 +604,7 @@ const file_note_proto_rawDesc = "" +
 	"note.proto\x12\anote_v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1egoogle/protobuf/wrappers.proto\"o\n" +
 	"\bNoteInfo\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x18\n" +
-	"\acontext\x18\x02 \x01(\tR\acontext\x12\x16\n" +
+	"\acontent\x18\x02 \x01(\tR\acontent\x12\x16\n" +
 	"\x06author\x18\x03 \x01(\tR\x06author\x12\x1b\n" +
 	"\tis_public\x18\x04 \x01(\bR\bisPublic\"\xb3\x01\n" +
 	"\x04Note\x12\x0e\n" +

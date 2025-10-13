@@ -21,7 +21,7 @@ func main() {
 	//conn, err := grpc.Dial(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	conn, err := grpc.NewClient(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalf("failed to connect to server", err)
+		log.Fatalf("failed to connect to server %v", err)
 	}
 
 	defer conn.Close()
@@ -30,7 +30,7 @@ func main() {
 	defer cancel()
 	r, err := c.Get(ctx, &desc.GetRequest{Id: noteID})
 	if err != nil {
-		log.Fatalf("failed to get note by id", err)
+		log.Fatalf("failed to get note by id %v", err)
 	}
 
 	log.Printf(color.RedString("Note info: \n"), color.GreenString("%+v", r.GetNote()))
